@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Recommendations</h1>
+        {% if message %}
+            <p>{{ message }}</p>
+        {% else %}
+            <ul class="recommendation-list">
+                {% for item_id, rating in recommendations %}
+                    <li class="rec-item">Clothing ID: {{ item_id }} - Predicted Rating: {{ rating|round(2) }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <a href="/" class="back-btn">Back to Home</a>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

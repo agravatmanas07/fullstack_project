@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothing Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body>
+    <div class="loader">
+        <svg class="hanger" width="100" height="100" viewBox="0 0 100 100">
+            <path d="M20 80 H80 M50 80 C50 40 70 20 80 20" stroke="#333" stroke-width="4" fill="none" class="hanger-path"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <h1>Clothing Recommendation System</h1>
+        <div class="cart">
+            <h2>Your Cart</h2>
+            <ul id="cart-items">
+                {% for item in cart_items %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <h2>Available Products</h2>
+        <ul class="product-list">
+            {% for product in products %}
+                <li class="product-item">
+                    {{ product }}
+                    <button class="add-to-cart" data-id="{{ product }}">Add to Cart</button>
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="/recommend" method="POST" class="recommend-form">
+            <label for="user_id">Enter User ID (optional):</label>
+            <input type="text" id="user_id" name="user_id" placeholder="e.g., 12345">
+            <input type="submit" value="Get Recommendations" class="submit-btn">
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

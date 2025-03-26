@@ -8,14 +8,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 </head>
 <body>
-    <div class="loader">
-        <svg class="hanger" width="100" height="100" viewBox="0 0 100 100">
-            <path d="M20 80 H80 M50 80 C50 40 70 20 80 20" stroke="#333" stroke-width="4" fill="none" class="hanger-path"/>
-        </svg>
-    </div>
-
     <div class="container">
-        <h1>Clothing Recommendation System</h1>
+        <h1>Women's Clothing Recommendation System</h1>
+        
         <div class="cart">
             <h2>Your Cart</h2>
             <ul id="cart-items">
@@ -24,18 +19,55 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <h2>Rate Products</h2>
+        <div class="rating-form">
+            <input type="text" id="rate-user-id" placeholder="Your User ID (e.g., user_123)">
+            <select id="rate-clothing-id">
+                {% for product in products %}
+                    <option value="{{ product['Clothing ID'] }}">{{ product['Title']|default('Untitled') }} ({{ product['Clothing ID'] }})</option>
+                {% endfor %}
+            </select>
+            <input type="number" id="rate-rating" min="1" max="5" placeholder="Rating (1-5)">
+            <button id="add-rating">Add Rating</button>
+            <button id="update-rating">Update Rating</button>
+            <button id="delete-rating">Delete Rating</button>
+        </div>
+
         <h2>Available Products</h2>
+        <div class="filters">
+            <label for="category-filter">Filter by Category:</label>
+            <select id="category-filter" onchange="applyFilters()">
+                <option value="All" {% if selected_category == 'All' %}selected{% endif %}>All</option>
+                {% for category in categories %}
+                    <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+                {% endfor %}
+            </select>
+            
+            <label for="rating-filter">Filter by Rating:</label>
+            <select id="rating-filter" onchange="applyFilters()">
+                <option value="All" {% if selected_rating == 'All' %}selected{% endif %}>All</option>
+                <option value="4+" {% if selected_rating == '4+' %}selected{% endif %}>4+ Stars</option>
+                <option value="3+" {% if selected_rating == '3+' %}selected{% endif %}>3+ Stars</option>
+            </select>
+        </div>
+        
         <ul class="product-list">
             {% for product in products %}
                 <li class="product-item">
-                    {{ product }}
-                    <button class="add-to-cart" data-id="{{ product }}">Add to Cart</button>
+                    <strong>{{ product['Title']|default('Untitled') }}</strong> (ID: {{ product['Clothing ID'] }})<br>
+                    Category: {{ product['Category']|default('Unknown') }}<br>
+                    Description: {% if product['Description'] is string %}{{ product['Description']|truncate(50) }}{% else %}{{ product['Description']|default('No description') }}{% endif %}<br>
+                    Price: {{ product['Price'] }}<br>
+                    Avg Rating: {{ product['Avg Rating']|round(1)|default('N/A') }}<br>
+                    <button class="add-to-cart" data-id="{{ product['Clothing ID'] }}">Add to Cart</button>
                 </li>
             {% endfor %}
         </ul>
+
         <form action="/recommend" method="POST" class="recommend-form">
-            <label for="user_id">Enter User ID (optional):</label>
-            <input type="text" id="user_id" name="user_id" placeholder="e.g., 12345">
+            <label for="user_id">Enter Your User ID:</label>
+            <input type="text" id="user_id" name="user_id" placeholder="e.g., user_123">
             <input type="submit" value="Get Recommendations" class="submit-btn">
         </form>
     </div>

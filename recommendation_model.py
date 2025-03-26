@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.decomposition import TruncatedSVD
 
 class RecommendationSystem:
-    def __init__(self, n_components=20):
+    def __init__(self, n_components=10):
         self.model = TruncatedSVD(n_components=n_components, random_state=42)
         self.user_item_matrix = None
         self.user_ids = None
@@ -24,7 +24,7 @@ class RecommendationSystem:
         if self.predicted_ratings is None:
             raise ValueError("Model has not been trained yet!")
         if user_id not in self.user_ids:
-            user_ratings = pd.Series(0, index=self.item_ids)  # Default for new user
+            user_ratings = pd.Series(0, index=self.item_ids)
         else:
             user_ratings = self.predicted_ratings.loc[user_id]
         already_rated = self.user_item_matrix.loc[user_id][self.user_item_matrix.loc[user_id] > 0].index

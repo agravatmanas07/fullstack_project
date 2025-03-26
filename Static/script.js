@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Loader
-    setTimeout(() => document.querySelector(".loader").style.display = "none", 2000);
-
     // Add to Cart
     document.querySelectorAll(".add-to-cart").forEach(button => {
         button.addEventListener("click", () => {
@@ -25,13 +22,44 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Animate product items
+    // Rating Functions
+    const rateUserId = document.getElementById("rate-user-id");
+    const rateClothingId = document.getElementById("rate-clothing-id");
+    const rateRating = document.getElementById("rate-rating");
+
+    document.getElementById("add-rating").addEventListener("click", () => {
+        fetch("/rate", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `user_id=${rateUserId.value}&clothing_id=${rateClothingId.value}&rating=${rateRating.value}`
+        }).then(response => response.json()).then(data => alert("Rating added!"));
+    });
+
+    document.getElementById("update-rating").addEventListener("click", () => {
+        fetch("/update_rating", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `user_id=${rateUserId.value}&clothing_id=${rateClothingId.value}&rating=${rateRating.value}`
+        }).then(response => response.json()).then(data => alert("Rating updated!"));
+    });
+
+    document.getElementById("delete-rating").addEventListener("click", () => {
+        fetch("/delete_rating", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `user_id=${rateUserId.value}&clothing_id=${rateClothingId.value}`
+        }).then(response => response.json()).then(data => alert("Rating deleted!"));
+    });
+
+    // Animations
     gsap.utils.toArray(".product-item").forEach(item => {
         gsap.from(item, { opacity: 0, y: 30, duration: 0.8, scrollTrigger: { trigger: item, start: "top 80%" } });
     });
 
-    // Animate recommendations (if on recommendations page)
-    if (document.querySelector(".recommendation-list")) {
-        gsap.from(".rec-item", { opacity: 0, y: 20, duration: 0.8, stagger: 0.2 });
-    }
+    // Filter Function
+    window.applyFilters = function() {
+        const category = document.getElementById("category-filter").value;
+        const rating = document.getElementById("rating-filter").value;
+        window.location.href = `/?category=${category}&rating=${rating}`;
+    };
 });

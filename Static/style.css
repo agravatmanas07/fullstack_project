@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 50px auto;
     padding: 20px;
     text-align: center;
@@ -16,42 +16,43 @@ body {
 h1 { font-size: 2.5em; color: #2c3e50; }
 h2 { font-size: 1.8em; color: #34495e; }
 
-/* Loader */
-.loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff;
+/* Cart */
+.cart ul { list-style: none; padding: 0; }
+.cart li { background: #eee; padding: 10px; margin: 5px 0; border-radius: 5px; }
+
+/* Rating Form */
+.rating-form { margin: 20px 0; }
+.rating-form input, .rating-form select {
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+.rating-form button {
+    padding: 10px 15px;
+    margin: 5px;
+    background: #e67e22;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.rating-form button:hover { background: #d35400; }
+
+/* Filters */
+.filters {
+    margin: 20px 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeOut 2s forwards 1.5s;
+    gap: 20px;
 }
-
-.hanger-path {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
-    animation: drawHanger 1.5s ease-in-out forwards;
-}
-
-@keyframes drawHanger { to { stroke-dashoffset: 0; } }
-@keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
-
-/* Cart */
-.cart ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px 0;
-}
-
-.cart li {
-    background: #eee;
-    padding: 10px;
-    margin: 5px 0;
+.filters label { font-size: 1.1em; margin-right: 10px; }
+.filters select {
+    padding: 8px;
+    border: 2px solid #ddd;
     border-radius: 5px;
+    font-size: 1em;
 }
 
 /* Product List */
@@ -59,7 +60,7 @@ h2 { font-size: 1.8em; color: #34495e; }
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -86,9 +87,8 @@ h2 { font-size: 1.8em; color: #34495e; }
 
 .add-to-cart:hover { background: #219653; }
 
-/* Form */
+/* Recommendation Form */
 .recommend-form { margin-top: 30px; }
-.recommend-form label { font-size: 1.2em; }
 .recommend-form input[type="text"] {
     padding: 10px;
     border: 2px solid #ddd;
@@ -96,7 +96,6 @@ h2 { font-size: 1.8em; color: #34495e; }
     width: 200px;
     transition: width 0.3s;
 }
-
 .recommend-form input[type="text"]:focus { width: 250px; border-color: #3498db; outline: none; }
 .submit-btn {
     padding: 10px 20px;
@@ -107,28 +106,4 @@ h2 { font-size: 1.8em; color: #34495e; }
     cursor: pointer;
     transition: transform 0.2s;
 }
-
 .submit-btn:hover { transform: scale(1.05); }
-
-/* Recommendations */
-.recommendation-list { list-style: none; padding: 0; }
-.rec-item {
-    background: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.back-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background: #e74c3c;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.back-btn:hover { background: #c0392b; }
